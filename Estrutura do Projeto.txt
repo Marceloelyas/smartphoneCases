@@ -1,0 +1,196 @@
+smartphone Cases/
+├── frontend/                           # Aplicação React
+│   ├── public/
+│   │   ├── index.html
+│   │   ├── favicon.ico
+│   │   └── manifest.json
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── common/
+│   │   │   │   ├── Header.tsx
+│   │   │   │   ├── Footer.tsx
+│   │   │   │   ├── Layout.tsx
+│   │   │   │   └── LoadingSpinner.tsx
+│   │   │   ├── auth/
+│   │   │   │   ├── LoginForm.tsx
+│   │   │   │   ├── RegisterForm.tsx
+│   │   │   │   └── AuthGuard.tsx
+│   │   │   ├── designer/
+│   │   │   │   ├── PhoneDesigner.tsx
+│   │   │   │   ├── ColorPicker.tsx
+│   │   │   │   ├── TextEditor.tsx
+│   │   │   │   └── ImageUploader.tsx
+│   │   │   ├── checkout/
+│   │   │   │   ├── PaymentCheckout.tsx
+│   │   │   │   ├── StripePayment.tsx
+│   │   │   │   ├── MercadoPagoPix.tsx
+│   │   │   │   └── OrderSummary.tsx
+│   │   │   ├── admin/
+│   │   │   │   ├── Dashboard.tsx
+│   │   │   │   ├── UserManagement.tsx
+│   │   │   │   ├── OrderManagement.tsx
+│   │   │   │   ├── ModelManagement.tsx
+│   │   │   │   └── AnalyticsCharts.tsx
+│   │   │   └── catalog/
+│   │   │       ├── ModelGrid.tsx
+│   │   │       ├── ModelCard.tsx
+│   │   │       └── FilterBar.tsx
+│   │   ├── pages/
+│   │   │   ├── HomePage.tsx
+│   │   │   ├── DesignerPage.tsx
+│   │   │   ├── CatalogPage.tsx
+│   │   │   ├── CheckoutPage.tsx
+│   │   │   ├── AdminPage.tsx
+│   │   │   ├── LoginPage.tsx
+│   │   │   └── DashboardPage.tsx
+│   │   ├── services/
+│   │   │   ├── api.ts
+│   │   │   ├── authService.ts
+│   │   │   ├── paymentService.ts
+│   │   │   └── designService.ts
+│   │   ├── hooks/
+│   │   │   ├── useAuth.ts
+│   │   │   ├── useDesigner.ts
+│   │   │   └── usePayment.ts
+│   │   ├── store/
+│   │   │   ├── authSlice.ts
+│   │   │   ├── designSlice.ts
+│   │   │   └── cartSlice.ts
+│   │   ├── utils/
+│   │   │   ├── validators.ts
+│   │   │   ├── helpers.ts
+│   │   │   └── constants.ts
+│   │   ├── types/
+│   │   │   ├── index.ts
+│   │   │   ├── user.ts
+│   │   │   ├── design.ts
+│   │   │   └── order.ts
+│   │   ├── styles/
+│   │   │   ├── globals.css
+│   │   │   └── tailwind.css
+│   │   ├── App.tsx
+│   │   ├── main.tsx
+│   │   └── routes.tsx
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── vite.config.ts
+│   ├── tailwind.config.js
+│   └── Dockerfile
+│
+├── backend/                           # API Node.js/Express
+│   ├── src/
+│   │   ├── controllers/
+│   │   │   ├── authController.js
+│   │   │   ├── userController.js
+│   │   │   ├── modelController.js
+│   │   │   ├── designController.js
+│   │   │   ├── orderController.js
+│   │   │   ├── paymentController.js
+│   │   │   ├── adminController.js
+│   │   │   └── webhookController.js
+│   │   ├── models/
+│   │   │   ├── index.js
+│   │   │   ├── User.js
+│   │   │   ├── UserProfile.js
+│   │   │   ├── PhoneModel.js
+│   │   │   ├── Design.js
+│   │   │   ├── Order.js
+│   │   │   ├── OrderItem.js
+│   │   │   ├── Payment.js
+│   │   │   ├── ActivityLog.js
+│   │   │   ├── SystemSetting.js
+│   │   │   └── Notification.js
+│   │   ├── routes/
+│   │   │   ├── authRoutes.js
+│   │   │   ├── userRoutes.js
+│   │   │   ├── modelRoutes.js
+│   │   │   ├── designRoutes.js
+│   │   │   ├── orderRoutes.js
+│   │   │   ├── paymentRoutes.js
+│   │   │   ├── adminRoutes.js
+│   │   │   └── webhookRoutes.js
+│   │   ├── middleware/
+│   │   │   ├── authMiddleware.js
+│   │   │   ├── errorMiddleware.js
+│   │   │   ├── validationMiddleware.js
+│   │   │   ├── loggingMiddleware.js
+│   │   │   ├── rateLimiter.js
+│   │   │   └── uploadMiddleware.js
+│   │   ├── services/
+│   │   │   ├── authService.js
+│   │   │   ├── paymentService.js
+│   │   │   ├── emailService.js
+│   │   │   ├── cacheService.js
+│   │   │   ├── storageService.js
+│   │   │   └── notificationService.js
+│   │   ├── utils/
+│   │   │   ├── logger.js
+│   │   │   ├── validator.js
+│   │   │   ├── helpers.js
+│   │   │   └── constants.js
+│   │   ├── config/
+│   │   │   ├── database.js
+│   │   │   ├── redis.js
+│   │   │   └── stripe.js
+│   │   ├── database/
+│   │   │   ├── migrations/
+│   │   │   │   ├── 001-initial-schema.js
+│   │   │   │   ├── 002-add-indexes.js
+│   │   │   │   └── 003-seed-data.js
+│   │   │   ├── seeds/
+│   │   │   │   ├── users.js
+│   │   │   │   ├── phoneModels.js
+│   │   │   │   └── settings.js
+│   │   │   └── connection.js
+│   │   ├── validators/
+│   │   │   ├── authValidator.js
+│   │   │   ├── userValidator.js
+│   │   │   ├── designValidator.js
+│   │   │   └── orderValidator.js
+│   │   └── server.js
+│   ├── docs/
+│   │   └── swagger.yaml
+│   ├── uploads/
+│   │   ├── designs/
+│   │   ├── thumbnails/
+│   │   └── avatars/
+│   ├── tests/
+│   │   ├── unit/
+│   │   ├── integration/
+│   │   └── e2e/
+│   ├── package.json
+│   ├── Dockerfile
+│   ├── Dockerfile.prod
+│   └── .env.example
+│
+├── database/                          # Scripts do banco de dados
+│   ├── init.sql                       # Script inicial
+│   ├── migrations/
+│   │   └── 0001-initial-setup.sql
+│   └── seeds/
+│       └── initial-data.sql
+│
+├── nginx/                             # Configuração Nginx
+│   ├── nginx.conf
+│   ├── ssl/
+│   └── logs/
+│
+├── docker/                            # Configurações Docker adicionais
+│   ├── postgres/
+│   │   └── pg_hba.conf
+│   └── redis/
+│       └── redis.conf
+│
+├── scripts/                           # Scripts utilitários
+│   ├── setup.sh
+│   ├── deploy.sh
+│   ├── backup.sh
+│   └── migrate.sh
+│
+├── .env.example                       # Variáveis de ambiente de exemplo
+├── docker-compose.yml                 # Desenvolvimento
+├── docker-compose.prod.yml            # Produção
+├── .gitignore
+├── README.md
+├── LICENSE
+└── CHANGELOG.md
