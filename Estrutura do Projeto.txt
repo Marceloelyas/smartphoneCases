@@ -1,5 +1,5 @@
 smartphone Cases/
-├── frontend/                           # Aplicação React
+├── frontend/                   # Aplicação React
 │   ├── public/
 │   │   ├── index.html
 │   │   ├── favicon.ico
@@ -77,7 +77,7 @@ smartphone Cases/
 │   ├── tailwind.config.js
 │   └── Dockerfile
 │
-├── backend/                           # API Node.js/Express
+├── backend/                # API Node.js/Express
 │   ├── src/
 │   │   ├── controllers/
 │   │   │   ├── authController.js
@@ -163,33 +163,33 @@ smartphone Cases/
 │   ├── Dockerfile.prod
 │   └── .env.example
 │
-├── database/                          # Scripts do banco de dados
-│   ├── init.sql                       # Script inicial
+├── database/         # Scripts do banco de dados
+│   ├── init.sql                 # Script inicial
 │   ├── migrations/
 │   │   └── 0001-initial-setup.sql
 │   └── seeds/
 │       └── initial-data.sql
 │
-├── nginx/                             # Configuração Nginx
+├── nginx/                   # Configuração Nginx
 │   ├── nginx.conf
 │   ├── ssl/
 │   └── logs/
 │
-├── docker/                            # Configurações Docker adicionais
+├── docker/      # Configurações Docker adicionais
 │   ├── postgres/
 │   │   └── pg_hba.conf
 │   └── redis/
 │       └── redis.conf
 │
-├── scripts/                           # Scripts utilitários
+├── scripts/                # Scripts utilitários
 │   ├── setup.sh
 │   ├── deploy.sh
 │   ├── backup.sh
 │   └── migrate.sh
 │
-├── .env.example                       # Variáveis de ambiente de exemplo
-├── docker-compose.yml                 # Desenvolvimento
-├── docker-compose.prod.yml            # Produção
+├── .env.examp  # Variáveis de ambiente de exemplo
+├── docker-compose.yml           # Desenvolvimento
+├── docker-compose.prod.yml       # Produção
 ├── .gitignore
 ├── README.md
 ├── LICENSE
