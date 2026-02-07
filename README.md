@@ -62,7 +62,7 @@ Sistema completo para criação e venda de capinhas de celular personalizadas.
 
 1. **Clone o repositório**
 
-git clone https://github.com/seu-usuario/smartphone-cases.git
+git clone https://github.com/marceloelyas/smartphone-cases.git
 cd smartphone-cases
 
 1. Configure as variáveis de ambiente
