@@ -96,7 +96,7 @@ npm run dev
 · Backend API: http://localhost:3001
 · Admin: http://localhost:5173/admin (usuário: admin@example.com / senha: admin123)
 
-📁 Estrutura do Projeto
+# 📁 Estrutura do Projeto
 
 smartphoneCases/
 ├── frontend/              # Aplicação React
@@ -107,7 +107,7 @@ smartphoneCases/
 ├── scripts/               # Scripts utilitários
 └── docker-compose.yml     # Orquestração Docker
 
-🔧 Comandos Úteis
+# 🔧 Comandos Úteis
 
 # Docker
 
@@ -126,7 +126,7 @@ docker-compose build --no-cache
 # Executar comandos em containers
 docker-compose exec backend npm test
 
-Desenvolvimento
+**Desenvolvimento**
 
 # Instalar dependências
 npm install
