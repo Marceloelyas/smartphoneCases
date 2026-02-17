@@ -69,11 +69,7 @@ cd smartphone-cases
 
 # Edite o arquivo .env com suas configurações
 
-1. Inicie com Docker (recomendado)
-
-docker-compose up -d
-
-1. Ou instale manualmente
+1. Inicie com Docker (recomendado) docker-compose up -d ou instale manualmente
 
 # Backend:
 
@@ -90,7 +86,7 @@ npm install
 npm run dev
 
 
-1. Acesse a aplicação
+**1. Acesse a aplicação**
 
 · Frontend: http://localhost:5173
 · Backend API: http://localhost:3001
