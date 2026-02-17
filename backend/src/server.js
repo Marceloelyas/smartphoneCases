@@ -74,3 +74,25 @@ db.connect()
   });
 
 module.exports = app;
+
+// Exemplo de uso em um controller
+const { sequelize } = require('../config/database');
+const { cacheUtils } = require('../config/redis');
+const { stripeUtils } = require('../config/stripe');
+
+// Exemplo de uso em um arquivo principal (app.js)
+const { testConnection } = require('./config/database');
+const { testRedisConnection } = require('./config/redis');
+
+// Testa conexões ao iniciar a aplicação
+async function initializeApp() {
+  await testConnection();
+  await testRedisConnection();
+  
+  // Inicia o servidor
+  app.listen(3000, () => {
+    console.log('🚀 Servidor rodando na porta 3000');
+  });
+}
+
+initializeApp();
