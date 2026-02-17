@@ -67,9 +67,7 @@ cd smartphone-cases
 
 1. Configure as variáveis de ambiente
 
-cp .env.example .env
 # Edite o arquivo .env com suas configurações
-
 
 1. Inicie com Docker (recomendado)
 
@@ -145,9 +143,9 @@ npm test
 # Lint do código
 npm run lint
 
-📊 Banco de Dados
+# 📊 Banco de Dados
 
-Modelos Principais
+**Modelos Principais**
 
 · Users: Usuários do sistema
 · PhoneModels: Modelos de celular disponíveis
@@ -155,7 +153,7 @@ Modelos Principais
 · Orders: Pedidos realizados
 · Payments: Pagamentos processados
 
-Migrações
+# Migrações
 
 # Criar nova migração
 npm run migrate:create -- --name nome-da-migracao
@@ -166,28 +164,28 @@ npm run migrate
 # Reverter migração
 npm run migrate:undo
 
-🔐 Segurança
+# 🔐 Segurança
 
-Autenticação
+**Autenticação**
 
 · JWT com refresh tokens
 · Rate limiting por IP
 · Validação de entrada em todas as rotas
 · Sanitização de dados
 
-Upload de Arquivos
+**Upload de Arquivos**
 
 · Validação de tipo e tamanho
 · Geração de thumbnails
 · Armazenamento seguro
 
-Pagamentos
+**Pagamentos**
 
 · Integração com Stripe e Mercado Pago
 · Webhooks para confirmação
 · Transações criptografadas
 
-🧪 Testes
+# 🧪 Testes
 
 # Testes unitários
 npm test
@@ -201,21 +199,21 @@ npm run test:e2e
 # Coverage
 npm run test:coverage
 
-📈 Monitoramento
+# 📈 Monitoramento
 
-Logs
+**Logs**
 
 · Winston para logging estruturado
 · Logs separados por ambiente
 · Rotação automática de arquivos
 
-Métricas
+**Métricas**
 
 · Endpoint de health check
 · Monitoramento de performance
 · Alertas de erro
 
-🤝 Contribuição
+# 🤝 Contribuição
 
 1. Fork o projeto
 2. Crie uma branch (git checkout -b feature/nova-feature)
@@ -223,17 +221,17 @@ Métricas
 4. Push para a branch (git push origin feature/nova-feature)
 5. Abra um Pull Request
 
-📄 Licença
+# 📄 Licença
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para detalhes.
 
-🆘 Suporte
+# 🆘 Suporte
 
 · Documentação: docs.smartphonecases.com
 · Issues: GitHub Issues
 · Email: suporte@smartphonecases.com
 
-🙏 Agradecimentos
+# 🙏 Agradecimentos
 
 · React
 · Node.js
