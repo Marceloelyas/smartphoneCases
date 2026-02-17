@@ -1,0 +1,561 @@
+openapi: 3.0.0
+info:
+  title: smartphoneCases API - Personalização de Cases
+  description: |
+    API para personalização de cases de smartphone com imagens enviadas pelo cliente.
+    Permite upload de imagens, criação de designs personalizados e gerenciamento de pedidos.
+  version: 1.0.0
+  contact:
+    name: Suporte smartphoneCases
+    email: suporte@smartphonecases.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Servidor de desenvolvimento local
+  - url: https://api.smartphonecases.com/v1
+    description: Servidor de produção
+
+tags:
+  - name: Cases
+    description: Gerenciamento de cases disponíveis
+  - name: Personalização
+    description: Criação e gerenciamento de designs personalizados
+  - name: Upload
+    description: Upload de imagens para personalização
+  - name: Pedidos
+    description: Gerenciamento de pedidos
+
+paths:
+  # ENDPOINTS DE CASES
+  /cases:
+    get:
+      tags:
+        - Cases
+      summary: Lista todos os modelos de cases disponíveis
+      description: Retorna uma lista de todos os modelos de smartphone disponíveis para personalização
+      parameters:
+        - in: query
+          name: modelo
+          schema:
+            type: string
+          description: Filtrar por modelo de smartphone
+        - in: query
+          name: cor
+          schema:
+            type: string
+          description: Filtrar por cor do case
+      responses:
+        '200':
+          description: Lista de cases retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Case'
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    
+    post:
+      tags:
+        - Cases
+      summary: Adiciona um novo modelo de case
+      description: Cria um novo modelo de case no catálogo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaseInput'
+      responses:
+        '201':
+          description: Case criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Erro interno do servidor
+
+  /cases/{id}:
+    get:
+      tags:
+        - Cases
+      summary: Busca um case específico
+      description: Retorna os detalhes de um case pelo ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do case
+      responses:
+        '200':
+          description: Case encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
+        '404':
+          description: Case não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ENDPOINTS DE UPLOAD
+  /upload/imagem:
+    post:
+      tags:
+        - Upload
+      summary: Upload de imagem para personalização
+      description: Faz upload de uma imagem para ser usada na personalização do case
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                imagem:
+                  type: string
+                  format: binary
+                  description: Arquivo de imagem (JPEG, PNG, GIF - max 10MB)
+                descricao:
+                  type: string
+                  description: Descrição opcional da imagem
+      responses:
+        '201':
+          description: Upload realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+              properties:
+                imagemId:
+                  type: string
+                  description: ID da imagem para referência futura
+                url:
+                  type: string
+                  description: URL da imagem processada
+                previewUrl:
+                  type: string
+                  description: URL da miniatura da imagem
+        '400':
+          description: Arquivo inválido ou muito grande
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '413':
+          description: Arquivo excede o tamanho máximo (10MB)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # ENDPOINTS DE PERSONALIZAÇÃO
+  /personalizacoes:
+    post:
+      tags:
+        - Personalização
+      summary: Cria uma nova personalização
+      description: Cria um design personalizado combinando case + imagem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonalizacaoInput'
+      responses:
+        '201':
+          description: Personalização criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Personalizacao'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Case ou imagem não encontrados
+
+  /personalizacoes/usuario/{usuarioId}:
+    get:
+      tags:
+        - Personalização
+      summary: Busca personalizações do usuário
+      description: Retorna todas as personalizações criadas por um usuário
+      parameters:
+        - in: path
+          name: usuarioId
+          required: true
+          schema:
+            type: integer
+          description: ID do usuário
+      responses:
+        '200':
+          description: Lista de personalizações do usuário
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Personalizacao'
+
+  /personalizacoes/{id}/preview:
+    get:
+      tags:
+        - Personalização
+      summary: Gera preview da personalização
+      description: Gera uma imagem preview do case personalizado
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID da personalização
+      responses:
+        '200':
+          description: Preview gerado com sucesso
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Personalização não encontrada
+
+  # ENDPOINTS DE PEDIDOS
+  /pedidos:
+    post:
+      tags:
+        - Pedidos
+      summary: Cria um novo pedido
+      description: Cria um pedido para uma personalização
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoInput'
+      responses:
+        '201':
+          description: Pedido criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '400':
+          description: Dados inválidos
+
+  /pedidos/{id}:
+    get:
+      tags:
+        - Pedidos
+      summary: Busca um pedido específico
+      description: Retorna os detalhes de um pedido
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do pedido
+      responses:
+        '200':
+          description: Pedido encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+        '404':
+          description: Pedido não encontrado
+
+    patch:
+      tags:
+        - Pedidos
+      summary: Atualiza status do pedido
+      description: Atualiza o status de um pedido
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do pedido
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [pendente, processando, enviado, entregue, cancelado]
+                  description: Novo status do pedido
+      responses:
+        '200':
+          description: Status atualizado com sucesso
+        '404':
+          description: Pedido não encontrado
+
+components:
+  schemas:
+    Case:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID único do case
+          example: 1
+        modelo_smartphone:
+          type: string
+          description: Modelo do smartphone compatível
+          example: "iPhone 13"
+        cor_base:
+          type: string
+          description: Cor base do case
+          example: "Preto"
+        material:
+          type: string
+          enum: [silicone, plastico, couro, metal]
+          description: Material do case
+          example: "silicone"
+        preco_base:
+          type: number
+          format: float
+          description: Preço base do case (sem personalização)
+          example: 49.90
+        imagem_modelo:
+          type: string
+          description: URL da imagem do modelo do case
+          example: "https://api.smartphonecases.com/images/cases/iphone13-preto.png"
+        disponivel:
+          type: boolean
+          description: Indica se o modelo está disponível
+          example: true
+
+    CaseInput:
+      type: object
+      required:
+        - modelo_smartphone
+        - cor_base
+        - preco_base
+      properties:
+        modelo_smartphone:
+          type: string
+        cor_base:
+          type: string
+        material:
+          type: string
+          enum: [silicone, plastico, couro, metal]
+        preco_base:
+          type: number
+        disponivel:
+          type: boolean
+          default: true
+
+    Imagem:
+      type: object
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+          description: URL da imagem em alta resolução
+        preview_url:
+          type: string
+          description: URL da miniatura
+        descricao:
+          type: string
+        data_upload:
+          type: string
+          format: date-time
+        usuario_id:
+          type: integer
+        tamanho_bytes:
+          type: integer
+        mime_type:
+          type: string
+          enum: [image/jpeg, image/png, image/gif]
+
+    Personalizacao:
+      type: object
+      properties:
+        id:
+          type: integer
+        case_id:
+          type: integer
+        imagem_id:
+          type: integer
+        usuario_id:
+          type: integer
+        posicao_imagem:
+          type: object
+          properties:
+            x:
+              type: integer
+              description: Posição X da imagem no case (px)
+            y:
+              type: integer
+              description: Posição Y da imagem no case (px)
+            escala:
+              type: number
+              description: Escala da imagem (1.0 = 100%)
+        data_criacao:
+          type: string
+          format: date-time
+        preview_url:
+          type: string
+          description: URL do preview gerado
+        case:
+          $ref: '#/components/schemas/Case'
+        imagem:
+          $ref: '#/components/schemas/Imagem'
+
+    PersonalizacaoInput:
+      type: object
+      required:
+        - case_id
+        - imagem_id
+      properties:
+        case_id:
+          type: integer
+        imagem_id:
+          type: integer
+        posicao_imagem:
+          type: object
+          properties:
+            x:
+              type: integer
+              default: 0
+            y:
+              type: integer
+              default: 0
+            escala:
+              type: number
+              default: 1.0
+
+    Pedido:
+      type: object
+      properties:
+        id:
+          type: integer
+        personalizacao_id:
+          type: integer
+        usuario_id:
+          type: integer
+        quantidade:
+          type: integer
+          minimum: 1
+          default: 1
+        preco_total:
+          type: number
+        status:
+          type: string
+          enum: [pendente, processando, enviado, entregue, cancelado]
+        endereco_entrega:
+          type: object
+          properties:
+            rua:
+              type: string
+            numero:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            estado:
+              type: string
+            cep:
+              type: string
+        data_pedido:
+          type: string
+          format: date-time
+        data_entrega_estimada:
+          type: string
+          format: date
+        personalizacao:
+          $ref: '#/components/schemas/Personalizacao'
+
+    PedidoInput:
+      type: object
+      required:
+        - personalizacao_id
+        - endereco_entrega
+      properties:
+        personalizacao_id:
+          type: integer
+        quantidade:
+          type: integer
+          minimum: 1
+          default: 1
+        endereco_entrega:
+          type: object
+          required:
+            - rua
+            - numero
+            - bairro
+            - cidade
+            - estado
+            - cep
+          properties:
+            rua:
+              type: string
+            numero:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            estado:
+              type: string
+            cep:
+              type: string
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Código do erro
+        message:
+          type: string
+          description: Mensagem descritiva do erro
+        details:
+          type: string
+          description: Detalhes adicionais (opcional)
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Autenticação via JWT token
+
+security:
+  - bearerAuth: []
