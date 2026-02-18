@@ -1,10 +1,414 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Smartphone Cases</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC-Cell Smartphone Case</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #f0f2f5 0%, #d9dee5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* card principal - sem backdrop-filter */
+        .case-studio {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 48px;
+            padding: 32px 24px;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.2), inset 2px 2px 5px rgba(255,255,255,0.6), inset -3px -3px 8px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        /* título principal */
+        .title-pccell {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #1e2b3c;
+            text-shadow: 3px 3px 0 rgba(255,255,255,0.7), 6px 6px 0 rgba(0,20,40,0.1);
+            margin-bottom: 16px;
+            word-break: break-word;
+        }
+        .title-pccell span {
+            background: #2c3e50;
+            color: #f2d53c;
+            padding: 0 16px;
+            border-radius: 60px;
+            display: inline-block;
+            box-shadow: inset 0 -3px 0 #1a2632;
+        }
+
+        .sub {
+            text-align: center;
+            font-weight: 400;
+            color: #1e2b3c;
+            background: rgba(255, 255, 240, 0.9);
+            width: fit-content;
+            margin: 0 auto 30px auto;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            border: 1px solid white;
+        }
+
+        /* area do produto (smartphone + escolha) */
+        .customizer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* MOCKUP DO SMARTPHONE COM CAPA */
+        .phone-mock {
+            flex: 1 1 300px;
+            min-width: 280px;
+            display: flex;
+            justify-content: center;
+            filter: drop-shadow(20px 25px 15px rgba(0,0,0,0.3));
+        }
+
+        .case-wrapper {
+            position: relative;
+            width: 300px;
+            height: 580px;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* corpo do smartphone (silhueta) */
+        .smartphone-body {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #1b1b1e;
+            border-radius: 40px;
+            box-shadow: 
+                0 0 0 6px #3a3d44,
+                0 20px 30px rgba(0,0,0,0.6),
+                inset 0 0 10px rgba(0,0,0,0.8);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* a "capa" personalizável */
+        .case-back {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            background: #ece7e1;
+            border-radius: 32px;
+            box-shadow: inset 0 2px 8px rgba(255,255,255,0.7), inset 0 -4px 6px rgba(0,0,0,0.2), 0 6px 10px rgba(0,0,0,0.3);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: background-image 0.2s ease, box-shadow 0.2s;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Simulação do recorte da câmera */
+        .camera-bump {
+            position: absolute;
+            top: 18px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 30% 30%, #3f4248, #1a1c20);
+            border-radius: 20px;
+            box-shadow: inset 0 -2px 5px black, 0 4px 8px black;
+            border: 2px solid #555;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+        .lens {
+            width: 22px;
+            height: 22px;
+            background: #0f0f12;
+            border-radius: 50%;
+            border: 2px solid #6d6f78;
+            box-shadow: inset 0 0 8px #00a6ff40;
+        }
+        .lens.small {
+            width: 14px;
+            height: 14px;
+            background: #23252b;
+        }
+
+        /* tela frontal (simulada) */
+        .screen-area {
+            position: absolute;
+            top: 60px;
+            left: 18px;
+            right: 18px;
+            height: 150px;
+            background: linear-gradient(145deg, #122231, #030a12);
+            border-radius: 24px;
+            border: 2px solid #3f4b5c;
+            box-shadow: inset 0 0 30px #3d5a80;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #b5d0ec;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            overflow: hidden;
+        }
+        .screen-area::after {
+            content: "◉  ͜  ◉";
+            font-size: 24px;
+            opacity: 0.5;
+            color: #48cae4;
+        }
+
+        /* mini painel de opções de imagem - sem backdrop-filter */
+        .image-picker {
+            flex: 1 1 280px;
+            background: rgba(30, 40, 50, 0.9);
+            border-radius: 48px;
+            padding: 28px 20px;
+            box-shadow: 0 20px 30px -5px rgba(0,0,0,0.5), inset 0 1px 4px rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .picker-title {
+            font-size: 1.9rem;
+            font-weight: 300;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff9e6;
+            border-left: 8px solid #f2d53c;
+            padding-left: 20px;
+        }
+        .picker-title i {
+            font-size: 2rem;
+            filter: drop-shadow(2px 2px 0 black);
+        }
+
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .choice-item {
+            background: rgba(255, 255, 240, 0.15);
+            border-radius: 40px;
+            padding: 10px 10px 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .choice-item:hover {
+            background: rgba(255, 215, 100, 0.3);
+            border-color: #f2d53c;
+            transform: scale(1.02);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+        }
+        .choice-item.active {
+            background: rgba(242, 213, 60, 0.4);
+            border-color: #ffd966;
+            box-shadow: 0 0 20px #f2d53c;
+        }
+
+        .thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 20px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 5px 10px black;
+            border: 2px solid white;
+        }
+
+        .info h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            text-shadow: 2px 2px 0 #1a1f2a;
+        }
+        .info p {
+            color: #e0e6f0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* footer-note sem backdrop-filter */
+        .footer-note {
+            margin-top: 30px;
+            text-align: center;
+            color: #2c3e50;
+            font-weight: 500;
+            background: rgba(255, 255, 200, 0.95);
+            border-radius: 40px;
+            padding: 10px 24px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid white;
+        }
+        .footer-note i {
+            font-style: normal;
+            background: #2c3e50;
+            color: #f2d53c;
+            padding: 4px 12px;
+            border-radius: 60px;
+        }
+
+        /* responsividade */
+        @media (max-width: 750px) {
+            .title-pccell { font-size: 2rem; }
+            .case-wrapper { width: 260px; height: 520px; }
+        }
+    </style>
 </head>
 <body>
-    <h1>Meu Projeto de Capas</h1>
-    <p>Site em construção. Em breve, minhas capas estarão aqui!</p>
+    <div class="case-studio">
+        <h1 class="title-pccell"><span>PC-Cell</span> Smartphone Case</h1>
+        <div class="sub"> personalize sua capa com um clique</div>
+        
+
+        <div class="customizer">
+            <!-- MOCKUP TELEFONE + CAPA -->
+            <div class="phone-mock">
+                <div class="case-wrapper">
+                    <div class="smartphone-body">
+                        <!-- a capa traseira (personalizável) -->
+                        <div class="case-back" id="phoneCaseBack">
+                            <!-- detalhe da câmera (fica por cima) -->
+                            <div class="camera-bump">
+                                <div class="lens"></div>
+                                <div class="lens small"></div>
+                            </div>
+                            <!-- simulação de tela frontal (só estética) 
+                            <div class="screen-area"></div>-->
+                            <!-- pequeno logo da PC-Cell na capa (opcional) -->
+                            <div style="position: absolute; bottom: 25px; left: 0; right: 0; text-align: center; color: rgba(255,255,255,0.5); font-size: 1.2rem; font-weight: 800; text-shadow: 0 2px 5px black; letter-spacing: 3px;">PC·CELL Test</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SELEÇÃO DE IMAGENS (CLIENTE ESCOLHE) -->
+            <div class="image-picker">
+                <div class="picker-title">
+                    <span>🖼️</span> escolha sua arte
+                </div>
+                <div class="gallery" id="galleryContainer">
+                    <!-- item 1 -->
+                    <div class="choice-item" data-img="url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&h=400&fit=crop')">
+                        <div class="thumb" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=120&h=120&fit=crop');"></div>
+                        <div class="info">
+                            <h3>Montanhas</h3>
+                            <p>pôr do sol / natureza</p>
+                        </div>
+                    </div>
+                    <!-- item 2 -->
+                    <div class="choice-item" data-img="url('https://images.unsplash.com/photo-1552083375-1447ce886485?w=400&h=400&fit=crop')">
+                        <div class="thumb" style="background-image: url('https://images.unsplash.com/photo-1552083375-1447ce886485?w=120&h=120&fit=crop');"></div>
+                        <div class="info">
+                            <h3>Abstract</h3>
+                            <p>formas & cores</p>
+                        </div>
+                    </div>
+                    <!-- item 3 -->
+                    <div class="choice-item" data-img="url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&h=400&fit=crop')">
+                        <div class="thumb" style="background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=120&h=120&fit=crop');"></div>
+                        <div class="info">
+                            <h3>Aura líquida</h3>
+                            <p>gradiente suave</p>
+                        </div>
+                    </div>
+                    <!-- item 4 -->
+                    <div class="choice-item" data-img="url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=400&h=400&fit=crop')">
+                        <div class="thumb" style="background-image: url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=120&h=120&fit=crop');"></div>
+                        <div class="info">
+                            <h3>Traços negros</h3>
+                            <p>moderno / geométrico</p>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7; text-align: right;">▼ clique em qualquer opção</p>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <i>PC-Cell</i> · capa personalizável com imagens dinâmicas
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const caseBack = document.getElementById('phoneCaseBack');
+            const choiceItems = document.querySelectorAll('.choice-item');
+
+            function setCaseImage(imgUrl) {
+                caseBack.style.backgroundImage = imgUrl;
+            }
+
+            function setActiveItem(activeElement) {
+                choiceItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+                activeElement.classList.add('active');
+            }
+
+            choiceItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const imgUrl = this.dataset.img;
+                    if (imgUrl) {
+                        setCaseImage(imgUrl);
+                        setActiveItem(this);
+                    }
+                });
+            });
+
+            // Define imagem inicial
+            if (choiceItems.length > 0) {
+                const firstItem = choiceItems[0];
+                const defaultImg = firstItem.dataset.img;
+                if (defaultImg) {
+                    caseBack.style.backgroundImage = defaultImg;
+                    firstItem.classList.add('active');
+                }
+            }
+            
+            caseBack.style.transition = 'background-image 0.4s ease, box-shadow 0.2s';
+        })();
+    </script>
 </body>
 </html>
